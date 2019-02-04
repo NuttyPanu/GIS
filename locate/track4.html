@@ -1,0 +1,59 @@
+<html>
+    <head>
+
+
+		<!--
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.css" />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+        <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=lYrP4vF3Uk5zgTiGGuEzQGwGIVDGuy24"></script>
+		-->
+
+    <link rel="stylesheet" href="track4/leaflet0.7.5.css?v=20170830">
+ 	<script src="track4/leaflet0.7.7.js?v=20170830"></script> 
+ 	<script src="track4/mq-map.js?v=20170830"></script> 
+
+        <script type="text/javascript">
+            window.onload = function() {
+                var popup = L.popup();
+                var geolocationMap = L.map('map', {
+                    layers: MQ.mapLayer(),
+                    center: [40.731701, -73.993411],
+                    zoom: 12
+                });
+
+                function geolocationErrorOccurred(geolocationSupported, popup, latLng) {
+                    popup.setLatLng(latLng);
+                    popup.setContent(geolocationSupported ?
+                            '<b>Error:</b> The Geolocation service failed.' :
+                            '<b>Error:</b> This browser doesn\'t support geolocation.');
+                    popup.openOn(geolocationMap);
+                }
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var latLng = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+
+                        popup.setLatLng(latLng);
+                        popup.setContent('This is your current location');
+                        popup.openOn(geolocationMap);
+
+                        geolocationMap.setView(latLng);
+                    }, function() {
+                        geolocationErrorOccurred(true, popup, geolocationMap.getCenter());
+                    });
+                } else {
+                    //No browser support geolocation service
+                    geolocationErrorOccurred(false, popup, geolocationMap.getCenter());
+                }
+            }
+        </script>
+    </head>
+
+    <body style='border:0; margin: 0'>
+        <div id='map' style='width: 100%; height:530px;'></div>
+    </body>
+</html>
