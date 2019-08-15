@@ -27,14 +27,14 @@ if (!is_null($events['events'])) {
 	foreach ($events['events'] as $event) {
 		// Reply only when message sent is in 'text' format >>กำหนดให้มีการตอบข้อความกลับเมื่อสิ่งที่ user ส่งมาเป็นข้อความ
 		if ($event['type'] == 'message' && $event['message']['type'] == 'video') {		
-			$recive_vdo_url = $event['message']['originalContentUrl'];// ข้อความที่เข้ามา
+			$recive_vdo_url = $event['message']['contentProvider']['originalContentUrl'];// ข้อความที่เข้ามา
 			$recive_uid = $event['source']['userId'];//userId ของ user ที่ส่งข้อความา
 			$recive_gid = $event['source']['groupId'];// groupId ของ user group ที่ส่งข้อความา			
 			$replyToken = $event['replyToken'];// ค่ารหัส replyToken
 			$messages = ['type' => 'text','text' => $recive_vdo_url];
 			$data = [
 				'replyToken' => $replyToken,
-				'messages' => [$messages],
+				'messages' => [$recive_vdo_url],
 				//'messages' => ["https://gispwaai.herokuapp.com/golf.jpg"],
 			];
 			$send_data = json_encode($data);
