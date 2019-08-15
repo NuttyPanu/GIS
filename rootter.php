@@ -31,10 +31,10 @@ if (!is_null($events['events'])) {
 			$recive_uid = $event['source']['userId'];//userId ของ user ที่ส่งข้อความา
 			$recive_gid = $event['source']['groupId'];// groupId ของ user group ที่ส่งข้อความา			
 			$replyToken = $event['replyToken'];// ค่ารหัส replyToken
-	
+			$messages = ['type' => 'text','text' => $recive_vdo_url];
 			$data = [
 				'replyToken' => $replyToken,
-				'messages' => [$recive_vdo_url],
+				'messages' => [$messages],
 				//'messages' => ["https://gispwaai.herokuapp.com/golf.jpg"],
 			];
 			$send_data = json_encode($data);
