@@ -51,6 +51,33 @@ if (!is_null($events['events'])) {
 			curl_close($reply);
 			echo $result . "\r\n";
 		}
+		if ($event['type'] == 'message' && $event['message']['type'] == 'text') {		
+			$recive_vdo_url = $event['message']['contentProvider']['originalContentUrl'];// ข้อความที่เข้ามา
+			$recive_uid = $event['source']['userId'];//userId ของ user ที่ส่งข้อความา
+			$recive_gid = $event['source']['groupId'];// groupId ของ user group ที่ส่งข้อความา			
+			$replyToken = $event['replyToken'];// ค่ารหัส replyToken
+			$messages = ['type' => 'text','text' => $recive_vdo_url];
+			$data = [
+				'replyToken' => $replyToken,
+				'messages' => ['กินไก่ๆ'],
+				//'messages' => [$recive_vdo_url],
+				//'messages' => ["https://gispwaai.herokuapp.com/golf.jpg"],
+			];
+			$send_data = json_encode($data);
+			$headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $channelAccessToken);			
+			// Make a POST Request to Messaging API to reply to sender
+			$reply = curl_init('https://api.line.me/v2/bot/message/reply');
+			curl_setopt($reply, CURLOPT_CUSTOMREQUEST, "POST");
+			curl_setopt($reply, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($reply, CURLOPT_POSTFIELDS, $send_data);
+			curl_setopt($reply, CURLOPT_HTTPHEADER, $headers);
+			curl_setopt($reply, CURLOPT_FOLLOWLOCATION, 1);
+			$result = curl_exec($reply);
+			curl_close($reply);
+			echo $result . "\r\n";
+		}
+
+
 	}
 }
 echo 'pass';
