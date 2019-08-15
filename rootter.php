@@ -34,7 +34,8 @@ if (!is_null($events['events'])) {
 			$messages = ['type' => 'text','text' => $recive_vdo_url];
 			$data = [
 				'replyToken' => $replyToken,
-				'messages' => [$recive_vdo_url],
+				'messages' => ['กินไก่ๆ'],
+				//'messages' => [$recive_vdo_url],
 				//'messages' => ["https://gispwaai.herokuapp.com/golf.jpg"],
 			];
 			$send_data = json_encode($data);
